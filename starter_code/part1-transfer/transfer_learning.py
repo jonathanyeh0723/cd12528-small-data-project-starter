@@ -45,7 +45,7 @@ num_workers = 4
 #<<<YOUR CODE HERE>>>
 
 # Load the datasets
-data_dir = 'cd12528-small-data-project-starter/starter_code/part1-transfer/'
+data_dir = 'cd12528-small-data-project-starter/starter_code/part1-transfer/imagedata-50/'
 train_dataset = datasets.ImageFolder(data_dir+'train', transform=train_transforms)
 val_dataset = datasets.ImageFolder(data_dir+'val', transform=val_test_transforms)
 test_dataset = datasets.ImageFolder(data_dir+'test', transform=val_test_transforms)
