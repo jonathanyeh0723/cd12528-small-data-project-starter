@@ -19,7 +19,7 @@ def test_model(test_loader, trained_model, class_names):
     print('showing test results')
     with torch.no_grad():
         #Get correct device
-        device = torch.device("cude:0" if torch.cuda.is_available() else "cpu")
+        #device = torch.device("cude:0" if torch.cuda.is_available() else "cpu")
         trained_model = trained_model.to(device)
         for i, (inputs, labels) in enumerate(test_loader):
             inputs = inputs.to(device)
