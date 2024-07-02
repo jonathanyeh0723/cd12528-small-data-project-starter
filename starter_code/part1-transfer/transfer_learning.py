@@ -71,9 +71,10 @@ test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num
 # 4. train_lr_scheduler 
 
 #<<<YOUR CODE HERE>>>
-device = torch.device("cude:0" if torch.cuda.is_available() else "cpu")
+#device = torch.device("cude:0" if torch.cuda.is_available() else "cpu")
 
-pretrained = models.vgg16(weights='DEFAULT').to(device)
+#pretrained = models.vgg16(weights='DEFAULT').to(device)
+pretrained = models.vgg16(weights='DEFAULT')
 
 for param in pretrained.parameters():
     param.requires_grad = False
