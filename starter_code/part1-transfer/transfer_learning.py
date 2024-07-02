@@ -84,6 +84,7 @@ num_ftrs
 
 pretrained.classifier[6] = nn.Linear(num_ftrs, 3)
 model = pretrained
+print(model)
 
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
