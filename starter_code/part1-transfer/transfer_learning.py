@@ -93,7 +93,7 @@ num_epochs = 5
 # When you have all the parameters in place, uncomment these to use the functions imported above
 def main():
    trained_model = train_model(model, criterion, optimizer, train_lr_scheduler, train_loader, val_loader, num_epochs=num_epochs)
-   test_model(test_loader, trained_model, class_names='imagedata-50')
+   test_model(test_loader, trained_model, class_names=['beach', 'desert', 'forest'])
 
 if __name__ == '__main__':
     main()
