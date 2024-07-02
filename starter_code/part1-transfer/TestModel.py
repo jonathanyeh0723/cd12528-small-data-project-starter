@@ -20,10 +20,11 @@ def test_model(test_loader, trained_model, class_names):
     with torch.no_grad():
         #Get correct device
         #device = torch.device("cude:0" if torch.cuda.is_available() else "cpu")
-        trained_model = trained_model.to(device)
+        #trained_model = trained_model.to(device)
+        trained_model = trained_model
         for i, (inputs, labels) in enumerate(test_loader):
-            inputs = inputs.to(device)
-            labels = labels.to(device)
+            #inputs = inputs.to(device)
+            #labels = labels.to(device)
             inp = torchvision.utils.make_grid(inputs)
             outputs = trained_model(inputs)
             _, preds = torch.max(outputs, 1)
