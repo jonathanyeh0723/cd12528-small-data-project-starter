@@ -5,8 +5,9 @@ import torch
 def train_model(model, criterion, optimizer, scheduler, train_loader, val_loader, num_epochs=20):
     #Get correct device
     #device = torch.device("cude:0" if torch.cuda.is_available() else "cpu")
-    #model = model.to(device)
-    model = model
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    model = model.to(device)
+    #model = model
     
     highest_accuracy = 0.0
     best_model_weights = copy.deepcopy(model.state_dict())
@@ -15,8 +16,8 @@ def train_model(model, criterion, optimizer, scheduler, train_loader, val_loader
         current_loss = 0.0
         current_correct = 0
         for inputs, labels in loader:
-            #inputs = inputs.to(device)
-            #labels = labels.to(device)
+            inputs = inputs.to(device)
+            labels = labels.to(device)
                 
             with torch.set_grad_enabled(training):
                 outputs = model(inputs)
