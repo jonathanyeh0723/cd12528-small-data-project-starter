@@ -10,6 +10,8 @@ from torch.utils.data import Dataset, DataLoader
 from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
 
+import numpy
+
 def load_and_standardize_data(path):
     df = pd.read_csv(path, sep=',')
     df = df.fillna(-99)
@@ -126,18 +128,96 @@ def generate_fake(mu, logvar, no_samples, scaler, model):
 # When you have all the code in place to generate synthetic data, uncomment the code below to run the model and the tests. 
 def main():
     # Get a device and set up data paths. You need paths for the original data, the data with just loan status = 1 and the new augmented dataset.
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    
+    original_data_path = 'data/loan_continuous.csv'
+    df = pd.read_csv(original_data_path)
 
     # Split the data out with loan status = 1
+    loan_status_1_df = df[df['Loan Status'] == 1]
+    loan_status_1_df.to_csv('data/loan_status_1.csv', index=False)
 
-    # Create DataLoaders for training and validation 
+    split_data_path = 'data/loan_status_1.csv'
+    test_model(split_data_path)
+    
+    # Create DataLoaders for training and validation
+    traindata_set = DataBuilder(split_data_path, train=True)
+    testdata_set = DataBuilder(split_data_path, train=False)
 
-    # Train and validate the model 
+    trainloader = DataLoader(dataset=traindata_set, batch_size=256)
+    testloader = DataLoader(dataset=testdata_set, batch_size=256)
+    
+    # Train and validate the model
+    D_in = traindata_set.x.shape[1]
+    H = 50
+    H2 = 12
+    model = Autoencoder(D_in, H, H2)
+    optimizer = optim.Adam(model.parameters(), lr=1e-3)
+    loss_mse = CustomLoss()
 
-    #scaler = trainloader.dataset.standardizer
-    #fake_data = generate_fake(mu, logvar, 50000, scaler, model)
+    epochs = 1500
+    val_losses = []
+    train_losses = []
+    test_losses = []
+
+    def train(epoch):
+        model.train()
+        train_loss = 0
+        for batch_idx, data in enumerate(trainloader):
+            data = data.to(device)
+            optimizer.zero_grad()
+            recon_batch, mu, logvar = model(data)
+            loss = loss_mse(recon_batch, data, mu, logvar)
+            loss.backward()
+            train_loss += loss.item()
+            optimizer.step()
+        if epoch % 100 == 0:
+            print("=====> Epoch: {} Average training loss: {:.2f}".format(epoch, train_loss/len(trainloader.dataset)))
+            train_losses.append(train_loss / len(trainloader.dataset))
+
+    def test(epoch):
+        with torch.no_grad():
+            test_loss = 0
+            for batch_idx, data in enumerate(testloader):
+                data = data.to(device)
+                optimizer.zero_grad()
+                recon_batch, mu, logvar = model(data)
+                loss = loss_mse(recon_batch, data, mu, logvar)
+                test_loss += loss.item()
+            if epoch % 100 == 0:
+                print("=====> Epoch: {} Average testing loss: {:.2f}".format(epoch, test_loss/len(testloader.dataset)))
+                test_losses.append(test_loss / len(testloader.dataset))
+    
+    for epoch in range(1, epochs + 1):
+        train(epoch)
+        test(epoch)
+
+    scaler = trainloader.dataset.standardizer\
+    with torch.no_grad():
+        for batch_idx, data in enumerate(testloader):
+            data = data.to(device)
+            optimizer.zero_grad()
+            recon_batch, mu, logvar = model(data)
+            
+    fake_data = generate_fake(mu, logvar, 50000, scaler, model)
 
     # Combine the new data with original dataset
+    cols = loan_status_1_df.columns
+    fake_loan = pd.DataFrame(fake_data, columns = cols)
 
+    int_col_names = []
+
+    for i in loan_status_1_df.columns:
+        if type(loan_status_1_df[i][15]) == numpy.int64:
+            #print(i)
+            int_col_names.append(i)
+
+    for c in int_col_names:
+        fake_loan[c] = np.round(fake_loan[c]).astype(int)
+
+    combine_df = pd.concat([df, fake_loan], axis=0)
+    combine_df.to_csv('data/loan_continuous_expanded.csv', index=False)
+    
     DATA_PATH = 'data/loan_continuous_expanded.csv'
     test_model(DATA_PATH)
 
