@@ -192,7 +192,8 @@ def main():
         train(epoch)
         test(epoch)
 
-    scaler = trainloader.dataset.standardizer\
+    scaler = trainloader.dataset.standardizer
+    
     with torch.no_grad():
         for batch_idx, data in enumerate(testloader):
             data = data.to(device)
