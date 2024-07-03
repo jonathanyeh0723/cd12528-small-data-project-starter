@@ -164,7 +164,7 @@ def main():
         model.train()
         train_loss = 0
         for batch_idx, data in enumerate(trainloader):
-            data = data.to(device)
+            #data = data.to(device)
             optimizer.zero_grad()
             recon_batch, mu, logvar = model(data)
             loss = loss_mse(recon_batch, data, mu, logvar)
@@ -179,7 +179,7 @@ def main():
         with torch.no_grad():
             test_loss = 0
             for batch_idx, data in enumerate(testloader):
-                data = data.to(device)
+                #data = data.to(device)
                 optimizer.zero_grad()
                 recon_batch, mu, logvar = model(data)
                 loss = loss_mse(recon_batch, data, mu, logvar)
@@ -196,7 +196,7 @@ def main():
     
     with torch.no_grad():
         for batch_idx, data in enumerate(testloader):
-            data = data.to(device)
+            #data = data.to(device)
             optimizer.zero_grad()
             recon_batch, mu, logvar = model(data)
             
