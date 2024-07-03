@@ -128,7 +128,7 @@ def generate_fake(mu, logvar, no_samples, scaler, model):
 # When you have all the code in place to generate synthetic data, uncomment the code below to run the model and the tests. 
 def main():
     # Get a device and set up data paths. You need paths for the original data, the data with just loan status = 1 and the new augmented dataset.
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    #device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     
     original_data_path = 'cd12528-small-data-project-starter/starter_code/part2-synthetic/data/loan_continuous.csv'
     df = pd.read_csv(original_data_path)
