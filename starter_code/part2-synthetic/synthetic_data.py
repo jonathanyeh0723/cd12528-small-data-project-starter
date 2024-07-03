@@ -130,14 +130,14 @@ def main():
     # Get a device and set up data paths. You need paths for the original data, the data with just loan status = 1 and the new augmented dataset.
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     
-    original_data_path = 'data/loan_continuous.csv'
+    original_data_path = 'cd12528-small-data-project-starter/starter_code/part2-synthetic/data/loan_continuous.csv'
     df = pd.read_csv(original_data_path)
 
     # Split the data out with loan status = 1
     loan_status_1_df = df[df['Loan Status'] == 1]
-    loan_status_1_df.to_csv('data/loan_status_1.csv', index=False)
+    loan_status_1_df.to_csv('cd12528-small-data-project-starter/starter_code/part2-synthetic/data/loan_status_1.csv', index=False)
 
-    split_data_path = 'data/loan_status_1.csv'
+    split_data_path = 'cd12528-small-data-project-starter/starter_code/part2-synthetic/data/loan_status_1.csv'
     test_model(split_data_path)
     
     # Create DataLoaders for training and validation
@@ -217,9 +217,9 @@ def main():
         fake_loan[c] = np.round(fake_loan[c]).astype(int)
 
     combine_df = pd.concat([df, fake_loan], axis=0)
-    combine_df.to_csv('data/loan_continuous_expanded.csv', index=False)
+    combine_df.to_csv('cd12528-small-data-project-starter/starter_code/part2-synthetic/data/loan_continuous_expanded.csv', index=False)
     
-    DATA_PATH = 'data/loan_continuous_expanded.csv'
+    DATA_PATH = 'cd12528-small-data-project-starter/starter_code/part2-synthetic/data/loan_continuous_expanded.csv'
     test_model(DATA_PATH)
 
 if __name__ == '__main__':
