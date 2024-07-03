@@ -1,0 +1,120 @@
+# Part 1
+VGG(
+  (features): Sequential(
+    (0): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): ReLU(inplace=True)
+    (2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (3): ReLU(inplace=True)
+    (4): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (5): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (6): ReLU(inplace=True)
+    (7): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (8): ReLU(inplace=True)
+    (9): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (10): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (11): ReLU(inplace=True)
+    (12): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (13): ReLU(inplace=True)
+    (14): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (15): ReLU(inplace=True)
+    (16): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (17): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (18): ReLU(inplace=True)
+    (19): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (20): ReLU(inplace=True)
+    (21): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (22): ReLU(inplace=True)
+    (23): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (24): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (25): ReLU(inplace=True)
+    (26): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (27): ReLU(inplace=True)
+    (28): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (29): ReLU(inplace=True)
+    (30): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+  )
+  (avgpool): AdaptiveAvgPool2d(output_size=(7, 7))
+  (classifier): Sequential(
+    (0): Linear(in_features=25088, out_features=4096, bias=True)
+    (1): ReLU(inplace=True)
+    (2): Dropout(p=0.5, inplace=False)
+    (3): Linear(in_features=4096, out_features=4096, bias=True)
+    (4): ReLU(inplace=True)
+    (5): Dropout(p=0.5, inplace=False)
+    (6): Linear(in_features=4096, out_features=3, bias=True)
+  )
+)
+Epoch: 1
+Phase: Train  Loss: 6.528109133243561 Accuracy: 0.7333333333333334
+Phase: Validation  Loss: 1.4020122618724902 Accuracy: 0.9333333333333333
+Epoch: 2
+Phase: Train  Loss: 3.790347666790088 Accuracy: 0.8733333333333334
+Phase: Validation  Loss: 2.030147604928061 Accuracy: 0.9333333333333333
+Epoch: 3
+Phase: Train  Loss: 4.333691223834951 Accuracy: 0.8666666666666667
+Phase: Validation  Loss: 0.7237373949298368 Accuracy: 0.9666666666666667
+Epoch: 4
+Phase: Train  Loss: 2.7441133658091226 Accuracy: 0.9
+Phase: Validation  Loss: 1.6165073128407432 Accuracy: 0.9333333333333333
+Epoch: 5
+Phase: Train  Loss: 2.16720202130576 Accuracy: 0.9333333333333333
+Phase: Validation  Loss: 2.4513435381262147 Accuracy: 0.9
+Training finished. Highest accuracy: 0.9666666666666667
+showing test results
+done
+
+# Part 2
+Best parameters found:
+ {'activation': 'tanh', 'alpha': 0.0001, 'hidden_layer_sizes': (5, 10), 'learning_rate': 'constant', 'solver': 'sgd'}
+Results on the test set:
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00      6241
+
+    accuracy                           1.00      6241
+   macro avg       1.00      1.00      1.00      6241
+weighted avg       1.00      1.00      1.00      6241
+
+=====> Epoch: 100 Average training loss: 17.61
+=====> Epoch: 100 Average testing loss: 18.48
+=====> Epoch: 200 Average training loss: 16.88
+=====> Epoch: 200 Average testing loss: 18.08
+=====> Epoch: 300 Average training loss: 16.62
+=====> Epoch: 300 Average testing loss: 18.06
+=====> Epoch: 400 Average training loss: 16.37
+=====> Epoch: 400 Average testing loss: 17.93
+=====> Epoch: 500 Average training loss: 16.11
+=====> Epoch: 500 Average testing loss: 17.85
+=====> Epoch: 600 Average training loss: 15.96
+=====> Epoch: 600 Average testing loss: 17.98
+=====> Epoch: 700 Average training loss: 15.78
+=====> Epoch: 700 Average testing loss: 17.99
+=====> Epoch: 800 Average training loss: 15.76
+=====> Epoch: 800 Average testing loss: 18.02
+=====> Epoch: 900 Average training loss: 15.70
+=====> Epoch: 900 Average testing loss: 18.06
+=====> Epoch: 1000 Average training loss: 15.60
+=====> Epoch: 1000 Average testing loss: 17.99
+=====> Epoch: 1100 Average training loss: 15.60
+=====> Epoch: 1100 Average testing loss: 18.00
+=====> Epoch: 1200 Average training loss: 15.69
+=====> Epoch: 1200 Average testing loss: 17.80
+=====> Epoch: 1300 Average training loss: 15.61
+=====> Epoch: 1300 Average testing loss: 18.07
+=====> Epoch: 1400 Average training loss: 15.53
+=====> Epoch: 1400 Average testing loss: 18.10
+=====> Epoch: 1500 Average training loss: 15.53
+=====> Epoch: 1500 Average testing loss: 18.15
+Best parameters found:
+ {'activation': 'tanh', 'alpha': 0.0001, 'hidden_layer_sizes': (5, 10), 'learning_rate': 'constant', 'solver': 'sgd'}
+Results on the test set:
+              precision    recall  f1-score   support
+
+           0       0.52      1.00      0.69     61222
+           1       0.67      0.00      0.00     56241
+
+    accuracy                           0.52    117463
+   macro avg       0.59      0.50      0.34    117463
+weighted avg       0.59      0.52      0.36    117463
+
+done
