@@ -118,5 +118,3 @@ Results on the test set:
 weighted avg       0.94      0.94      0.94    117463
 
 done
-
-done
